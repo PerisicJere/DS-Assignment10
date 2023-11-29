@@ -18,7 +18,7 @@ public class QuickSort {
                 }else if(partitionNum == 4){
                     partitionIndex = partition4(saleRecords, begin, end);
                 }else if(partitionNum == 5){
-                    partitionIndex = 0;//partition5(saleRecords, begin, end);
+                    partitionIndex = partition5(saleRecords, begin, end);
                 }else if(partitionNum == 6){
                     partitionIndex = 0;//partition6(saleRecords, begin, end);
                 }
@@ -104,6 +104,26 @@ public class QuickSort {
         saleRecords.set(i+1,saleRecords.get(median));
         saleRecords.set(median, temp);
 
+        return i+1;
+    }
+    private int partition5(ArrayList<SaleRecord> saleRecords, int begin, int end) {
+        Random randInt = new Random();
+        int num = randInt.nextInt(saleRecords.size());
+        String pivot = saleRecords.get(num).getDate();
+        int i = begin - 1;
+        for(int j = begin; j < end; j++){
+            if(saleRecords.get(j).getDate().compareTo(pivot) >= 0){
+                i++;
+
+                SaleRecord temp = saleRecords.get(i);
+                saleRecords.set(i, saleRecords.get(j));
+                saleRecords.set(j, temp);
+            }
+        }
+
+        SaleRecord temp = saleRecords.get(i+1);
+        saleRecords.set(i+1,saleRecords.get(num));
+        saleRecords.set(num, temp);
         return i+1;
     }
 

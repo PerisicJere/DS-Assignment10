@@ -14,12 +14,13 @@ public class program10 {
         experiment(treeMap,3);
         System.out.println("Partitioning with median (x[bot], x[mid], x[top] : ");
         experiment(treeMap,4);
-
+        System.out.println("Partitioning with random value: ");
+        experiment(treeMap, 5);
     }
     public static void experiment(TreeMap<String, ArrayList<SaleRecord>> treeMap, int partitionNum){
         for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
             ArrayList<SaleRecord> tries = entry.getValue();
-            System.out.print(entry.getKey() + ":");
+            System.out.print(entry.getKey() + ": ");
             int count = 0;
             long startTime = System.currentTimeMillis();
             QuickSort quickSort = new QuickSort(tries, partitionNum);
