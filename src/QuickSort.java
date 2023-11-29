@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class QuickSort {
 
@@ -16,7 +16,7 @@ public class QuickSort {
                 }else if(partitionNum == 3){
                     partitionIndex = partition3(saleRecords, begin, end);
                 }else if(partitionNum == 4){
-                    partitionIndex = 0;//partition4(saleRecords, begin, end);
+                    partitionIndex = partition4(saleRecords, begin, end);
                 }else if(partitionNum == 5){
                     partitionIndex = 0;//partition5(saleRecords, begin, end);
                 }else if(partitionNum == 6){
@@ -79,6 +79,31 @@ public class QuickSort {
         SaleRecord temp = saleRecords.get(i+1);
         saleRecords.set(i+1, saleRecords.get(mid));
         saleRecords.set(mid,temp);
+        return i+1;
+    }
+    private int medianOfThree(int top, int mid, int bot){
+       int[] arr = {top, mid, bot};
+       Arrays.sort(arr);
+       return arr[1];
+    }
+    private int partition4(ArrayList<SaleRecord> saleRecords, int begin, int end){
+        int mid = begin + (end - begin) / 2;
+        int median = medianOfThree(begin, mid, end);
+        String pivot = saleRecords.get(median).getDate();
+        int i = begin - 1;
+        for(int j = begin; j < end; j++){
+            if(saleRecords.get(j).getDate().compareTo(pivot) >= 0){
+                i++;
+
+                SaleRecord temp = saleRecords.get(i);
+                saleRecords.set(i, saleRecords.get(j));
+                saleRecords.set(j, temp);
+            }
+        }
+        SaleRecord temp = saleRecords.get(i+1);
+        saleRecords.set(i+1,saleRecords.get(median));
+        saleRecords.set(median, temp);
+
         return i+1;
     }
 

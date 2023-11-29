@@ -49,7 +49,7 @@ public class program10 {
             System.out.print(entry.getKey() + ":");
             int count = 0;
             long startTime = System.currentTimeMillis();
-            QuickSort quickSort = new QuickSort(tries, 3);
+            QuickSort quickSort = new QuickSort(tries, 4);
             long endTime = System.currentTimeMillis();
             float finalTime = (float) (endTime - startTime) / 1000;
             count += tries.size();
