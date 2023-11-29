@@ -14,7 +14,7 @@ public class QuickSort {
                 } else if(partitionNum == 2){
                     partitionIndex = partition2(saleRecords, begin, end);
                 }else if(partitionNum == 3){
-                    partitionIndex = 0;//partition3(saleRecords, begin, end);
+                    partitionIndex = partition3(saleRecords, begin, end);
                 }else if(partitionNum == 4){
                     partitionIndex = 0;//partition4(saleRecords, begin, end);
                 }else if(partitionNum == 5){
@@ -30,8 +30,8 @@ public class QuickSort {
         String pivot = saleRecords.get(end).getDate();
         int i = begin - 1;
 
-        for(int j = begin; j <= end; j++){
-            if(saleRecords.get(j).getDate().compareTo(pivot) > 0){
+        for (int j = begin; j < end; j++) {
+            if (saleRecords.get(j).getDate().compareTo(pivot) <= 0) {
                 i++;
 
                 SaleRecord temp = saleRecords.get(i);
@@ -46,10 +46,10 @@ public class QuickSort {
         return i;
     }
     private int partition2(ArrayList<SaleRecord> saleRecords,int begin,int end){
-            String pivot = saleRecords.get(end).getDate();
-            int i=begin - 1;
-            for(int j=begin; j<end; j++){
-                if(saleRecords.get(j).getDate().compareTo(pivot) >= 0){
+            String pivot = saleRecords.get(begin).getDate();
+            int i= begin - 1;
+            for(int j = begin; j < end; j++){
+                if(saleRecords.get(j).getDate().compareTo(pivot) <= 0){
                 i++;
 
                 SaleRecord temp=saleRecords.get(i);
@@ -63,6 +63,23 @@ public class QuickSort {
 
             return i+1;
         }
+    private int partition3(ArrayList<SaleRecord> saleRecords, int begin, int end){
+        int mid = begin + (end - begin) / 2;
+        String pivot = saleRecords.get(mid).getDate();
+        int i = begin -1;
+        for(int j = begin; j < end; j++){
+            if(saleRecords.get(j).getDate().compareTo(pivot) >= 0){
+                i++;
 
+                SaleRecord temp = saleRecords.get(i);
+                saleRecords.set(i, saleRecords.get(j));
+                saleRecords.set(j, temp);
+            }
+        }
+        SaleRecord temp = saleRecords.get(i+1);
+        saleRecords.set(i+1, saleRecords.get(mid));
+        saleRecords.set(mid,temp);
+        return i+1;
+    }
 
 }
