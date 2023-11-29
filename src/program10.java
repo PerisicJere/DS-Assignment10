@@ -6,12 +6,13 @@ public class program10 {
         String file = "car_sales_data.csv";
         TreeMap<String, ArrayList<SaleRecord>> treeMap = new TreeMap<>();
         insertFromCSV(file, treeMap);
-        experiment1(treeMap);
-        experiment2(treeMap);
-        experiment3(treeMap);
+        experiment(treeMap,1);
+        experiment(treeMap,2);
+        experiment(treeMap,3);
+        experiment(treeMap,4);
 
     }
-    public static void experiment1(TreeMap<String, ArrayList<SaleRecord>> treeMap){
+    public static void experiment(TreeMap<String, ArrayList<SaleRecord>> treeMap, int partitionNum){
         System.out.println("Partitioning with x[bot]: ");
 
         for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
@@ -19,7 +20,7 @@ public class program10 {
             System.out.print(entry.getKey() + ":");
             int count = 0;
             long startTime = System.currentTimeMillis();
-            QuickSort quickSort = new QuickSort(tries, 1);
+            QuickSort quickSort = new QuickSort(tries, partitionNum);
             long endTime = System.currentTimeMillis();
             float finalTime = (float) (endTime - startTime) / 1000;
             count += tries.size();
@@ -27,36 +28,7 @@ public class program10 {
 
         }
     }
-    public static void experiment2(TreeMap<String, ArrayList<SaleRecord>> treeMap){
-        System.out.println("Partitioning with x[top]: ");
-        for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
-            ArrayList<SaleRecord> tries = entry.getValue();
-            System.out.print(entry.getKey() + ":");
-            int count = 0;
-            long startTime = System.currentTimeMillis();
-            QuickSort quickSort = new QuickSort(tries, 2);
-            long endTime = System.currentTimeMillis();
-            float finalTime = (float) (endTime - startTime) / 1000;
-            count += tries.size();
-            System.out.printf(count + " records\t" + finalTime + " seconds\n");
 
-        }
-    }
-    public static void experiment3(TreeMap<String, ArrayList<SaleRecord>> treeMap){
-        System.out.println("Partitioning with x[mid]: ");
-        for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
-            ArrayList<SaleRecord> tries = entry.getValue();
-            System.out.print(entry.getKey() + ":");
-            int count = 0;
-            long startTime = System.currentTimeMillis();
-            QuickSort quickSort = new QuickSort(tries, 4);
-            long endTime = System.currentTimeMillis();
-            float finalTime = (float) (endTime - startTime) / 1000;
-            count += tries.size();
-            System.out.printf(count + " records\t" + finalTime + " seconds\n");
-
-        }
-    }
     private static SaleRecord parsingCSV(String line) {
         String[] parts = line.split(",");
         if (parts.length != 9) {
