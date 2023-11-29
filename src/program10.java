@@ -1,6 +1,6 @@
-import com.sun.source.tree.Tree;
-
 import java.io.*;
+import java.text.ParseException;
+
 import java.util.*;
 
 public class program10 {
@@ -11,33 +11,20 @@ public class program10 {
         insertFromCSV(file, treeMap);
         long endTime = System.currentTimeMillis();
         System.out.println((float)(endTime-startTime)/1000+" seconds");
-        int count = 0;
-        for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
-            System.out.println("Car Make: " + entry.getKey());
-            for (SaleRecord saleRecord : entry.getValue()) {
-                count++;
-            }
-            System.out.print(" "+count);
-            count = 0;
-            System.out.println();
-        }
+        System.out.print("Unsorted list: ");
+
+
     }
-    private static SaleRecord parsingCSV(String line) {
+    private static SaleRecord parsingCSV(String line) throws ParseException {
         String[] parts = line.split(",");
         if (parts.length != 9) {
             return null;
         }
-        String dateStr = parts[0];
-        String salesperson = parts[1];
-        String customerName = parts[2];
+        String date = parts[0];
         String carMake = parts[3];
-        String carModel = parts[4];
-        int carYear = Integer.parseInt(parts[5]);
-        double salePrice = Double.parseDouble(parts[6]);
-        double commissionRate = Double.parseDouble(parts[7]);
-        double commissionEarned = Double.parseDouble(parts[8]);
 
-        return new SaleRecord(dateStr, salesperson, customerName, carMake, carModel, carYear, salePrice, commissionRate, commissionEarned);
+
+        return new SaleRecord(date, carMake);
     }
     private static void insertFromCSV(String csvFilePath, TreeMap<String, ArrayList<SaleRecord>> treeMap ){
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
@@ -59,10 +46,12 @@ public class program10 {
                     }
 
                     arrayList.add(saleRecord);
+
                 }
+
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
