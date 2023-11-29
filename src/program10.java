@@ -6,15 +6,17 @@ public class program10 {
         String file = "car_sales_data.csv";
         TreeMap<String, ArrayList<SaleRecord>> treeMap = new TreeMap<>();
         insertFromCSV(file, treeMap);
+        System.out.println("Partitioning with x[bot]: ");
         experiment(treeMap,1);
+        System.out.println("Partitioning with x[top]: ");
         experiment(treeMap,2);
+        System.out.println("Partitioning with x[mid]: ");
         experiment(treeMap,3);
+        System.out.println("Partitioning with median (x[bot], x[mid], x[top] : ");
         experiment(treeMap,4);
 
     }
     public static void experiment(TreeMap<String, ArrayList<SaleRecord>> treeMap, int partitionNum){
-        System.out.println("Partitioning with x[bot]: ");
-
         for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
             ArrayList<SaleRecord> tries = entry.getValue();
             System.out.print(entry.getKey() + ":");
