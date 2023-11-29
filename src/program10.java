@@ -1,21 +1,29 @@
 import java.io.*;
-import java.text.ParseException;
-
 import java.util.*;
 
 public class program10 {
     public static void main(String[] args) {
-        String file = "car_sales_data.csv";
+        String file = "small_sample.csv";
         TreeMap<String, ArrayList<SaleRecord>> treeMap = new TreeMap<>();
         long startTime = System.currentTimeMillis();
         insertFromCSV(file, treeMap);
-        long endTime = System.currentTimeMillis();
-        System.out.println((float)(endTime-startTime)/1000+" seconds");
-        System.out.print("Unsorted list: ");
-
+        experiment1(treeMap);
 
     }
-    private static SaleRecord parsingCSV(String line) throws ParseException {
+    public static void experiment1(TreeMap<String, ArrayList<SaleRecord>> treeMap){
+        System.out.print("Unsorted list: ");
+        ArrayList<SaleRecord> tries = new ArrayList<>();
+        for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
+            tries.addAll(entry.getValue());
+        }
+        System.out.println();
+        QuickSort quickSort = new QuickSort(tries,1);
+        System.out.print("Sorted list: ");
+        for(SaleRecord num : tries){
+            System.out.print(num+", ");
+        }
+    }
+    private static SaleRecord parsingCSV(String line) {
         String[] parts = line.split(",");
         if (parts.length != 9) {
             return null;
@@ -36,23 +44,21 @@ public class program10 {
                     continue;
                 }
                 SaleRecord saleRecord = parsingCSV(line);
-                if (saleRecord != null) {
-                    String carMake = saleRecord.getCarMake();
-                    ArrayList<SaleRecord> arrayList = treeMap.get(carMake);
-
-                    if (arrayList == null) {
-                        arrayList = new ArrayList<>();
-                        treeMap.put(carMake, arrayList);
-                    }
-
-                    arrayList.add(saleRecord);
-
-                }
-
+                populateTreeMap(saleRecord, treeMap);
             }
-
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private static void populateTreeMap(SaleRecord saleRecord, TreeMap<String, ArrayList<SaleRecord>> treeMap){
+        if (saleRecord != null) {
+            String carMake = saleRecord.getCarMake();
+            ArrayList<SaleRecord> arrayList = treeMap.get(carMake);
+            if (arrayList == null) {
+                arrayList = new ArrayList<>();
+                treeMap.put(carMake, arrayList);
+            }
+            arrayList.add(saleRecord);
         }
     }
 }
