@@ -6,6 +6,9 @@ public class program10 {
         String file = "car_sales_data.csv";
         TreeMap<String, ArrayList<SaleRecord>> treeMap = new TreeMap<>();
         insertFromCSV(file, treeMap);
+        runExperiments(treeMap);
+    }
+    public static void runExperiments(TreeMap<String, ArrayList<SaleRecord>> treeMap){
         System.out.println("Partitioning with x[bot]: ");
         experiment(treeMap,1);
         System.out.println("Partitioning with x[top]: ");
@@ -16,18 +19,20 @@ public class program10 {
         experiment(treeMap,4);
         System.out.println("Partitioning with random value: ");
         experiment(treeMap, 5);
+        System.out.println("Partitioning with random median value: ");
+        experiment(treeMap, 6);
     }
     public static void experiment(TreeMap<String, ArrayList<SaleRecord>> treeMap, int partitionNum){
         for (Map.Entry<String, ArrayList<SaleRecord>> entry : treeMap.entrySet()) {
             ArrayList<SaleRecord> tries = entry.getValue();
-            System.out.print(entry.getKey() + ": ");
+            System.out.print(entry.getKey() + ", ");
             int count = 0;
             long startTime = System.currentTimeMillis();
             QuickSort quickSort = new QuickSort(tries, partitionNum);
             long endTime = System.currentTimeMillis();
             float finalTime = (float) (endTime - startTime) / 1000;
             count += tries.size();
-            System.out.printf(count + " records\t" + finalTime + " seconds\n");
+            System.out.printf(count + " records, " + finalTime + " seconds\n");
 
         }
     }

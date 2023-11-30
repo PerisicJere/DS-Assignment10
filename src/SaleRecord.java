@@ -31,7 +31,6 @@ class SaleRecord {
     @Override
     public String toString() {
         return date ;
-
     }
 
 }
